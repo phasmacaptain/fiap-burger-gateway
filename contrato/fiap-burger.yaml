@@ -1,0 +1,238 @@
+openapi: 3.0.0
+info:
+  title: FiapBurger API Gateway
+  description: API Gateway para o FiapBurger
+  version: 1.0.0
+servers:
+  - url: /
+    description: Servidor de produção
+
+paths:
+  /clientes:
+    get:
+      summary: Lista todos os clientes
+      operationId: listClientes
+      responses:
+        '200':
+          description: Lista de clientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cliente'
+      security:
+        - apiKey: []
+    post:
+      summary: Cria um novo cliente
+      operationId: createCliente
+      requestBody:
+        description: Dados do novo cliente
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '201':
+          description: Cliente criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+      security:
+        - apiKey: []
+
+  /pedidos:
+    get:
+      summary: Lista todos os pedidos
+      operationId: listPedidos
+      responses:
+        '200':
+          description: Lista de pedidos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pedido'
+      security:
+        - apiKey: []
+    post:
+      summary: Cria um novo pedido
+      operationId: createPedido
+      requestBody:
+        description: Dados do novo pedido
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pedido'
+      responses:
+        '201':
+          description: Pedido criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+      security:
+        - apiKey: []
+
+  /produtos:
+    get:
+      summary: Lista todos os produtos
+      operationId: listProdutos
+      responses:
+        '200':
+          description: Lista de produtos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+      security:
+        - apiKey: []
+    post:
+      summary: Cria um novo produto
+      operationId: createProduto
+      requestBody:
+        description: Dados do novo produto
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produto'
+      responses:
+        '201':
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+      security:
+        - apiKey: []
+
+  /categorias:
+    get:
+      summary: Lista todas as categorias
+      operationId: listCategorias
+      responses:
+        '200':
+          description: Lista de categorias
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Categoria'
+      security:
+        - apiKey: []
+    post:
+      summary: Cria uma nova categoria
+      operationId: createCategoria
+      requestBody:
+        description: Dados da nova categoria
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Categoria'
+      responses:
+        '201':
+          description: Categoria criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+      security:
+        - apiKey: []
+
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+
+  schemas:
+    Cliente:
+      type: object
+      properties:
+        cpf:
+          type: string
+          description: CPF do cliente
+        nome:
+          type: string
+          description: Nome do cliente
+        email:
+          type: string
+          description: E-mail do cliente
+      required:
+        - cpf
+        - nome
+        - email
+
+    Pedido:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID do pedido
+        data_hora_inicio:
+          type: string
+          format: date-time
+          description: Data e hora de início do pedido
+        cpf_cliente:
+          type: string
+          description: CPF do cliente
+        id_pagamento:
+          type: string
+          description: ID do pagamento
+        id_satisfacao:
+          type: string
+          description: ID da satisfação
+      required:
+        - id
+        - data_hora_inicio
+        - cpf_cliente
+        - id_pagamento
+
+    Produto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID do produto
+        nome:
+          type: string
+          description: Nome do produto
+        descricao:
+          type: string
+          description: Descrição do produto
+        preco:
+          type: number
+          format: float
+          description: Preço do produto
+        id_categoria:
+          type: string
+          description: ID da categoria
+      required:
+        - id
+        - nome
+        - descricao
+        - preco
+        - id_categoria
+
+    Categoria:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID da categoria
+        nome:
+          type: string
+          description: Nome da categoria
+      required:
+        - id
+        - nome
