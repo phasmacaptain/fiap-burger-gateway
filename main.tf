@@ -3,7 +3,7 @@ resource "aws_api_gateway_rest_api" "fiap_burger_api" {
   description = "API Gateway para o FiapBurger"
 
  body = templatefile(
-    "${path.module}/../openapi/.generated/openapi.json",
+    "${path.module}/../contrato/.generated/fiap-burger.yaml",
     {
       target_group_port          = var.target_group_port
       dns_name                   = data.aws_lb.load_balancer.dns_name
