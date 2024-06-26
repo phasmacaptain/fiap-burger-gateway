@@ -1,12 +1,14 @@
-  name: Deploy API Gateway
+name: Deploy API Gateway
 
 on:
   push:
     branches:
       - main
+      - feature/**
   pull_request:
     branches:
       - main
+      - feature/**
 
 jobs:
   validate-openapi:
@@ -68,4 +70,5 @@ jobs:
 
       - name: Update API Gateway
         run: |
-          aws apigateway import-rest-api --fail-on-warnings --parameters endpointConfigurationTypes=REGIONAL --body 'file://api-gateway/openapi.yaml'
+          aws apigateway put-rest-api --rest-api-id $(terraform output -raw rest_api_id) --mode merge --body 'file://api-gateway/openapi.yaml'
+        working-directory: api-gateway
