@@ -27,7 +27,7 @@ jobs:
         run: npm install -g @apidevtools/swagger-cli
       
       - name: Validate OpenAPI file
-        run: swagger-cli validate api-gateway/openapi.yaml
+        run: swagger-cli validate contrato/fiap-burger.yaml
 
   terraform-apply:
     name: Terraform Apply
