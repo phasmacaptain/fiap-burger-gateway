@@ -1,8 +1,9 @@
-resource "aws_api_gateway_rest_api" "fiap_burger_api" {
+
+resource "aws_api_gateway_rest_api" "api_gateway" {
   name        = "FiapBurgerAPI"
   description = "API Gateway para o FiapBurger"
 
- body = templatefile(
+  body = templatefile(
     "${path.module}/../openapi/.generated/openapi.json",
     {
       target_group_port          = var.target_group_port
@@ -13,8 +14,12 @@ resource "aws_api_gateway_rest_api" "fiap_burger_api" {
       lambda_auth_sign_in_arn    = data.aws_lambda_function.auth_sign_in.invoke_arn
       lambda_auth_authorizer_arn = data.aws_lambda_function.auth_authorizer.invoke_arn
     }
-}
+  )
 
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}
 
 resource "aws_api_gateway_resource" "clientes" {
   rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
