@@ -7,9 +7,11 @@ variable "target_group_port" {
 variable "dns_name" {
   description = "The DNS name of the load balancer"
   type        = string
+  default     = "http://"
 }
 
 variable "uriECRImage" {
   description = "The URI of the ECR image"
   type        = string
+  default     = "http://"
 }
