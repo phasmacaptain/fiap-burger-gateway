@@ -20,7 +20,6 @@ module "api_gateway" {
   vpc_link_id                   = aws_api_gateway_vpc_link.vpc_link.id
   target_group_port             = var.target_group_port
   dns_name                      = var.dns_name
-  uriECRImage                   = var.uriECRImage
 }
 
 resource "aws_api_gateway_vpc_link" "vpc_link" {

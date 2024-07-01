@@ -33,7 +33,3 @@ variable "lambda_auth_authorizer" {
   type        = string
 }
 
-variable "uriECRImage" {
-  description = "The URI of the ECR image"
-  type        = string
-}

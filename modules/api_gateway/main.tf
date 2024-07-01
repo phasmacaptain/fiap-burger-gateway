@@ -137,7 +137,9 @@ resource "aws_api_gateway_integration" "clientes_integration" {
   http_method             = aws_api_gateway_method.clientes_method_any.http_method
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.clients_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "clientes_integration_get" {
@@ -146,7 +148,9 @@ resource "aws_api_gateway_integration" "clientes_integration_get" {
   http_method             = aws_api_gateway_method.clientes_method_get.http_method
   integration_http_method = "GET"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.clients_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "pedidos_integration" {
@@ -155,7 +159,9 @@ resource "aws_api_gateway_integration" "pedidos_integration" {
   http_method             = aws_api_gateway_method.pedidos_method_any.http_method
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.pedidos_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "pedidos_integration_get" {
@@ -164,7 +170,9 @@ resource "aws_api_gateway_integration" "pedidos_integration_get" {
   http_method             = aws_api_gateway_method.pedidos_method_get.http_method
   integration_http_method = "GET"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.pedidos_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "produtos_integration" {
@@ -173,7 +181,9 @@ resource "aws_api_gateway_integration" "produtos_integration" {
   http_method             = aws_api_gateway_method.produtos_method_any.http_method
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.produtos_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "produtos_integration_get" {
@@ -182,7 +192,9 @@ resource "aws_api_gateway_integration" "produtos_integration_get" {
   http_method             = aws_api_gateway_method.produtos_method_get.http_method
   integration_http_method = "GET"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.produtos_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "checkout_integration" {
@@ -191,7 +203,9 @@ resource "aws_api_gateway_integration" "checkout_integration" {
   http_method             = aws_api_gateway_method.checkout_method_any.http_method
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.checkout_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "categorias_integration" {
@@ -200,7 +214,9 @@ resource "aws_api_gateway_integration" "categorias_integration" {
   http_method             = aws_api_gateway_method.categorias_method_any.http_method
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.categorias_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "categorias_integration_get" {
@@ -209,7 +225,9 @@ resource "aws_api_gateway_integration" "categorias_integration_get" {
   http_method             = aws_api_gateway_method.categorias_method_get.http_method
   integration_http_method = "GET"
   type                    = "HTTP_PROXY"
-  uri                     = var.uriECRImage
+  uri                     = "http://${aws_lb.categorias_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
 }
 
 resource "aws_api_gateway_deployment" "fiap_burger_deployment" {

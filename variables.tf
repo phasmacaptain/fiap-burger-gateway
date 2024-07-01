@@ -7,7 +7,7 @@ variable "target_group_port" {
 variable "dns_name" {
   description = "The DNS name of the load balancer"
   type        = string
-  default     = "http://"
+  default     = "a690af0e21e134494803e9ed08048abc-1821136041.us-east-1.elb.amazonaws.com"
 }
 
 variable "uriECRImage" {
