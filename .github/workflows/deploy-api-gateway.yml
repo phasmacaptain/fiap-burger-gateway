@@ -43,7 +43,6 @@ jobs:
           terraform_version: 1.0.0
 
       - name: Terraform Destroy
-        id: init
         run: terraform destroy -auto-approve
 
       - name: Terraform Init
