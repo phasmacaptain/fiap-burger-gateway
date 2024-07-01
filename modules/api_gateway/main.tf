@@ -9,8 +9,6 @@ resource "aws_api_gateway_rest_api" "fiap_burger_api" {
       dns_name                   = var.dns_name
       vpc_link_id                = var.vpc_link_id
       api_gateway_role           = var.api_gateway_role
-      lambda_auth_sign_up_arn    = var.lambda_auth_sign_up
-      lambda_auth_sign_in_arn    = var.lambda_auth_sign_in
       lambda_auth_authorizer_arn = var.lambda_auth_authorizer
     }
   )
@@ -23,7 +21,7 @@ resource "aws_api_gateway_rest_api" "fiap_burger_api" {
 resource "aws_api_gateway_authorizer" "lambda_authorizer" {
   name                    = "LambdaAuthorizer"
   rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
-  authorizer_uri          = aws_lambda_function.auth_sign_up.invoke_arn
+  authorizer_uri          = var.auth_authorizer_invoke_arn
   authorizer_credentials  = aws_iam_role.api_gateway_role.arn
   identity_source         = "method.request.header.Authorization"
   authorizer_result_ttl_in_seconds = 300

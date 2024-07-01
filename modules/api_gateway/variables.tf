@@ -23,7 +23,7 @@ variable "lambda_auth_sign_up" {
   type        = string
 }
 
-variable "lambda_auth_sign_in" {
+variable "auth_authorizer_invoke_arn" {
   description = "The ARN of the Lambda function for sign in"
   type        = string
 }
