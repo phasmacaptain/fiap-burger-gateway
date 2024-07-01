@@ -1,5 +1,5 @@
 resource "aws_security_group" "lb_sg" {
-  name        = "fiap-burger-lb-sg"
+  name        = "fiap-burger-lb-sg-gtw"
   description = "Allow HTTP traffic"
   vpc_id      = "vpc-061b6881e5e910a9a"
 
