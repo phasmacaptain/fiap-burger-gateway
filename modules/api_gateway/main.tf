@@ -229,3 +229,39 @@ resource "aws_api_gateway_deployment" "fiap_burger_deployment" {
   rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
   stage_name  = "prod"
 }
+
+resource "aws_iam_role" "api_gateway_role" {
+  name = "api-gateway-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "apigateway.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "api_gateway_policy" {
+  name = "api-gateway-policy"
+  role = aws_iam_role.api_gateway_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "lambda:InvokeFunction",
+          "execute-api:Invoke"
+        ],
+        Effect   = "Allow",
+        Resource = "*"
+      }
+    ]
+  })
+}
