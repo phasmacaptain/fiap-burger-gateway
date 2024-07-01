@@ -27,7 +27,7 @@ resource "aws_lb" "clients_fiap_burger_lb" {
 }
 
 resource "aws_lb_target_group" "clients_fiap_burger_tg" {
-  name     = "fiap-burger-tg"
+  name     = "clients_fiap_burger_tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "vpc-061b6881e5e910a9a"
@@ -53,7 +53,7 @@ resource "aws_lb" "pedidos_fiap_burger_lb" {
 }
 
 resource "aws_lb_target_group" "pedidos_fiap_burger_tg" {
-  name     = "fiap-burger-tg"
+  name     = "pedidos_fiap_burger_tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "vpc-061b6881e5e910a9a"
@@ -79,7 +79,7 @@ resource "aws_lb" "produtos_fiap_burger_lb" {
 }
 
 resource "aws_lb_target_group" "produtos_fiap_burger_tg" {
-  name     = "fiap-burger-tg"
+  name     = "produtos_fiap_burger_tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "vpc-061b6881e5e910a9a"
@@ -105,7 +105,7 @@ resource "aws_lb" "checkout_fiap_burger_lb" {
 }
 
 resource "aws_lb_target_group" "checkout_fiap_burger_tg" {
-  name     = "fiap-burger-tg"
+  name     = "produtos_fiap_burger_tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "vpc-061b6881e5e910a9a"
@@ -131,7 +131,7 @@ resource "aws_lb" "categorias_fiap_burger_lb" {
 }
 
 resource "aws_lb_target_group" "categorias_fiap_burger_tg" {
-  name     = "fiap-burger-tg"
+  name     = "produtos_fiap_burger_tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "vpc-061b6881e5e910a9a"
