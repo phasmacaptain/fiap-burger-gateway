@@ -1,7 +1,3 @@
-data "aws_lb" "load_balancer" {
-  name = "your-load-balancer-name"
-}
-
 module "iam" {
   source = "./modules/iam"
 }
