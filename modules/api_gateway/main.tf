@@ -7,7 +7,6 @@ resource "aws_api_gateway_rest_api" "fiap_burger_api" {
     {
       target_group_port          = var.target_group_port
       dns_name                   = var.dns_name
-      vpc_link_id                = var.vpc_link_id
       api_gateway_role           = var.api_gateway_role
       lambda_auth_authorizer_arn = var.lambda_auth_authorizer
     }

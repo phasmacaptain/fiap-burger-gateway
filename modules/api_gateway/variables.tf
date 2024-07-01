@@ -8,11 +8,6 @@ variable "dns_name" {
   type        = string
 }
 
-variable "vpc_link_id" {
-  description = "The VPC link ID for the API Gateway"
-  type        = string
-}
-
 variable "api_gateway_role" {
   description = "The ARN of the IAM role for API Gateway"
   type        = string
