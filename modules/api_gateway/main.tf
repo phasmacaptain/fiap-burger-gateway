@@ -20,6 +20,17 @@ resource "aws_api_gateway_rest_api" "fiap_burger_api" {
   }
 }
 
+resource "aws_api_gateway_authorizer" "lambda_authorizer" {
+  name                    = "LambdaAuthorizer"
+  rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
+  authorizer_uri          = aws_lambda_function.auth_authorizer.invoke_arn
+  authorizer_credentials  = aws_iam_role.api_gateway_role.arn
+  identity_source         = "method.request.header.Authorization"
+  authorizer_result_ttl_in_seconds = 300
+  type                    = "TOKEN"
+}
+
+
 resource "aws_api_gateway_resource" "clientes" {
   rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
   parent_id   = aws_api_gateway_rest_api.fiap_burger_api.root_resource_id
@@ -54,63 +65,72 @@ resource "aws_api_gateway_method" "clientes_method_any" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.clientes.id
   http_method   = "ANY"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_method" "clientes_method_get" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.clientes.id
   http_method   = "GET"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_method" "pedidos_method_any" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.pedidos.id
   http_method   = "ANY"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_method" "pedidos_method_get" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.pedidos.id
   http_method   = "GET"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_method" "produtos_method_any" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.produtos.id
   http_method   = "ANY"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_method" "produtos_method_get" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.produtos.id
   http_method   = "GET"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_method" "checkout_method_any" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.checkout.id
   http_method   = "ANY"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_method" "categorias_method_get" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.categorias.id
   http_method   = "GET"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_method" "categorias_method_any" {
   rest_api_id   = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id   = aws_api_gateway_resource.categorias.id
   http_method   = "ANY"
-  authorization = "NONE"
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.lambda_authorizer.id
 }
 
 resource "aws_api_gateway_integration" "clientes_integration" {
