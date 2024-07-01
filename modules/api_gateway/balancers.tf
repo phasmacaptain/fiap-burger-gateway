@@ -105,7 +105,7 @@ resource "aws_lb" "checkout_fiap_burger_lb" {
 }
 
 resource "aws_lb_target_group" "checkout_fiap_burger_tg" {
-  name     = "produtos-fiap-burger-tg"
+  name     = "ckeckout-fiap-burger-tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "vpc-061b6881e5e910a9a"
@@ -131,7 +131,7 @@ resource "aws_lb" "categorias_fiap_burger_lb" {
 }
 
 resource "aws_lb_target_group" "categorias_fiap_burger_tg" {
-  name     = "produtos-fiap-burger-tg"
+  name     = "categorias-fiap-burger-tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "vpc-061b6881e5e910a9a"
