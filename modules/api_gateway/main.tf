@@ -7,7 +7,7 @@ resource "aws_api_gateway_rest_api" "fiap_burger_api" {
     {
       target_group_port          = var.target_group_port
       dns_name                   = var.dns_name
-      api_gateway_role           = var.api_gateway_role
+      api_gateway_role           = "arn:aws:iam::641207671710:role/LabRole"
       lambda_auth_authorizer_arn = var.lambda_auth_authorizer
     }
   )
@@ -21,7 +21,7 @@ resource "aws_api_gateway_authorizer" "lambda_authorizer" {
   name                    = "LambdaAuthorizer"
   rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
   authorizer_uri          = var.auth_authorizer_invoke_arn
-  authorizer_credentials  = aws_iam_role.api_gateway_role.arn
+  authorizer_credentials  = "arn:aws:iam::641207671710:role/LabRole"
   identity_source         = "method.request.header.Authorization"
   authorizer_result_ttl_in_seconds = 300
   type                    = "TOKEN"
@@ -243,40 +243,4 @@ resource "aws_api_gateway_deployment" "fiap_burger_deployment" {
   ]
   rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
   stage_name  = "prod"
-}
-
-resource "aws_iam_role" "api_gateway_role" {
-  name = "api-gateway-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = "sts:AssumeRole",
-        Effect = "Allow",
-        Principal = {
-          Service = "apigateway.amazonaws.com"
-        }
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy" "api_gateway_policy" {
-  name = "api-gateway-policy"
-  role = aws_iam_role.api_gateway_role.id
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = [
-          "lambda:InvokeFunction",
-          "execute-api:Invoke"
-        ],
-        Effect   = "Allow",
-        Resource = "*"
-      }
-    ]
-  })
 }
