@@ -138,7 +138,7 @@ resource "aws_api_gateway_integration" "clientes_integration" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.clients_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.clients_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "clientes_integration_get" {
@@ -149,7 +149,7 @@ resource "aws_api_gateway_integration" "clientes_integration_get" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.clients_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.clients_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "pedidos_integration" {
@@ -160,7 +160,7 @@ resource "aws_api_gateway_integration" "pedidos_integration" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.pedidos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.pedidos_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "pedidos_integration_get" {
@@ -171,7 +171,7 @@ resource "aws_api_gateway_integration" "pedidos_integration_get" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.pedidos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.pedidos_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "produtos_integration" {
@@ -182,7 +182,7 @@ resource "aws_api_gateway_integration" "produtos_integration" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.produtos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.produtos_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "produtos_integration_get" {
@@ -193,7 +193,7 @@ resource "aws_api_gateway_integration" "produtos_integration_get" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.produtos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.produtos_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "checkout_integration" {
@@ -204,7 +204,7 @@ resource "aws_api_gateway_integration" "checkout_integration" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.checkout_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.checkout_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "categorias_integration" {
@@ -215,7 +215,7 @@ resource "aws_api_gateway_integration" "categorias_integration" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.categorias_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.categorias_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "categorias_integration_get" {
@@ -226,7 +226,7 @@ resource "aws_api_gateway_integration" "categorias_integration_get" {
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.categorias_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.categorias_vpc_link.id
 }
 
 resource "aws_api_gateway_deployment" "fiap_burger_deployment" {

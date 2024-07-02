@@ -148,13 +148,37 @@ resource "aws_lb_listener" "categorias_fiap_burger_listener" {
   }
 }
 
-resource "aws_api_gateway_vpc_link" "vpc_link" {
+resource "aws_api_gateway_vpc_link" "clients_vpc_link" {
   name        = "fiap-burger-vpc-link"
   target_arns = [
     aws_lb.clients_fiap_burger_lb.arn,
-    aws_lb.pedidos_fiap_burger_lb.arn,
+  ]
+}
+
+resource "aws_api_gateway_vpc_link" "produtos_vpc_link" {
+  name        = "fiap-burger-vpc-link"
+  target_arns = [
+    aws_lb.produtos_fiap_burger_lb.arn,
+  ]
+}
+
+resource "aws_api_gateway_vpc_link" "categorias_vpc_link" {
+  name        = "fiap-burger-vpc-link"
+  target_arns = [
     aws_lb.categorias_fiap_burger_lb.arn,
+  ]
+}
+
+resource "aws_api_gateway_vpc_link" "checkout_vpc_link" {
+  name        = "fiap-burger-vpc-link"
+  target_arns = [
     aws_lb.checkout_fiap_burger_lb.arn,
-    aws_lb.produtos_fiap_burger_lb.arn
+  ]
+}
+
+resource "aws_api_gateway_vpc_link" "pedidos_vpc_link" {
+  name        = "fiap-burger-vpc-link"
+  target_arns = [
+    aws_lb.pedidos_fiap_burger_lb.arn,
   ]
 }
