@@ -1,7 +1,3 @@
-module "iam" {
-  source = "./modules/iam"
-}
-
 module "lambda" {
   source           = "./modules/lambda"
   lambda_exec_role = "arn:aws:iam::641207671710:role/LabRole"
