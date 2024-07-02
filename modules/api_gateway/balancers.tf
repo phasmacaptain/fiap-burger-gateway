@@ -21,7 +21,7 @@ resource "aws_security_group" "lb_sg" {
 resource "aws_lb" "clients_fiap_burger_lb" {
   name               = "fiap-burger-lb-clients"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
 }
@@ -47,7 +47,7 @@ resource "aws_lb_listener" "clients_fiap_burger_listener" {
 resource "aws_lb" "pedidos_fiap_burger_lb" {
   name               = "fiap-burger-lb-pedidos"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
 }
@@ -73,7 +73,7 @@ resource "aws_lb_listener" "pedidos_fiap_burger_listener" {
 resource "aws_lb" "produtos_fiap_burger_lb" {
   name               = "fiap-burger-lb-produtos"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
 }
@@ -99,7 +99,7 @@ resource "aws_lb_listener" "produtos_fiap_burger_listener" {
 resource "aws_lb" "checkout_fiap_burger_lb" {
   name               = "fiap-burger-lb-checkout"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
 }
@@ -125,7 +125,7 @@ resource "aws_lb_listener" "checkout_fiap_burger_listener" {
 resource "aws_lb" "categorias_fiap_burger_lb" {
   name               = "fiap-burger-lb-categorias"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
 }
