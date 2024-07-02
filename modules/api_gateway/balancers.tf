@@ -29,14 +29,14 @@ resource "aws_lb" "clients_fiap_burger_lb" {
 resource "aws_lb_target_group" "clients_fiap_burger_tg" {
   name     = "clients-fiap-burger-tg"
   port     = 80
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = "vpc-061b6881e5e910a9a"
 }
 
 resource "aws_lb_listener" "clients_fiap_burger_listener" {
   load_balancer_arn = aws_lb.clients_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -55,14 +55,14 @@ resource "aws_lb" "pedidos_fiap_burger_lb" {
 resource "aws_lb_target_group" "pedidos_fiap_burger_tg" {
   name     = "pedidos-fiap-burger-tg"
   port     = 80
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = "vpc-061b6881e5e910a9a"
 }
 
 resource "aws_lb_listener" "pedidos_fiap_burger_listener" {
   load_balancer_arn = aws_lb.pedidos_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -81,14 +81,14 @@ resource "aws_lb" "produtos_fiap_burger_lb" {
 resource "aws_lb_target_group" "produtos_fiap_burger_tg" {
   name     = "produtos-fiap-burger-tg"
   port     = 80
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = "vpc-061b6881e5e910a9a"
 }
 
 resource "aws_lb_listener" "produtos_fiap_burger_listener" {
   load_balancer_arn = aws_lb.produtos_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -107,14 +107,14 @@ resource "aws_lb" "checkout_fiap_burger_lb" {
 resource "aws_lb_target_group" "checkout_fiap_burger_tg" {
   name     = "checkout-fiap-burger-tg"
   port     = 80
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = "vpc-061b6881e5e910a9a"
 }
 
 resource "aws_lb_listener" "checkout_fiap_burger_listener" {
   load_balancer_arn = aws_lb.checkout_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -133,14 +133,14 @@ resource "aws_lb" "categorias_fiap_burger_lb" {
 resource "aws_lb_target_group" "categorias_fiap_burger_tg" {
   name     = "categorias-fiap-burger-tg"
   port     = 80
-  protocol = "HTTP"
+  protocol = "TCP"
   vpc_id   = "vpc-061b6881e5e910a9a"
 }
 
 resource "aws_lb_listener" "categorias_fiap_burger_listener" {
   load_balancer_arn = aws_lb.categorias_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
