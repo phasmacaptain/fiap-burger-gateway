@@ -113,40 +113,40 @@ paths:
       security:
         - apiKey: []
 
-  /categorias:
-    get:
-      summary: Lista todas as categorias
-      operationId: listCategorias
-      responses:
-        '200':
-          description: Lista de categorias
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Categoria'
-      security:
-        - apiKey: []
-    post:
-      summary: Cria uma nova categoria
-      operationId: createCategoria
-      requestBody:
-        description: Dados da nova categoria
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Categoria'
-      responses:
-        '201':
-          description: Categoria criada com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Categoria'
-      security:
-        - apiKey: []
+  # /categorias:
+  #   get:
+  #     summary: Lista todas as categorias
+  #     operationId: listCategorias
+  #     responses:
+  #       '200':
+  #         description: Lista de categorias
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/Categoria'
+  #     security:
+  #       - apiKey: []
+  #   post:
+  #     summary: Cria uma nova categoria
+  #     operationId: createCategoria
+  #     requestBody:
+  #       description: Dados da nova categoria
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/Categoria'
+  #     responses:
+  #       '201':
+  #         description: Categoria criada com sucesso
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Categoria'
+  #     security:
+  #       - apiKey: []
 
 components:
   securitySchemes:
