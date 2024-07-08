@@ -41,7 +41,7 @@ resource "aws_lb_listener" "clients_fiap_burger_listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.clients_fiap_burger_tg.arn
-  }å
+  }
 }
 
 resource "aws_lb" "pedidos_fiap_burger_lb" {
