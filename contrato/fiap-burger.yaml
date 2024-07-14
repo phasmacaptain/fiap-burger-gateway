@@ -248,9 +248,29 @@ paths:
           description: Requisição inválida
 
   /produtos:
+    post:
+      summary: Adiciona um novo produto
+      operationId: addProduto
+      requestBody:
+        description: Dados do novo produto
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdutoRequest'
+      responses:
+        '200':
+          description: Produto adicionado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponse'
+        '400':
+          description: Requisição inválida
+
     get:
       summary: Lista todos os produtos
-      operationId: listProdutos
+      operationId: getAllProdutos
       responses:
         '200':
           description: Lista de produtos
@@ -259,63 +279,99 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Produto'
-      security:
-        - apiKey: []
-    post:
-      summary: Cria um novo produto
-      operationId: createProduto
+                  $ref: '#/components/schemas/ProdutoResponse'
+
+  /produtos/{id}:
+    get:
+      summary: Busca um produto pelo ID
+      operationId: getProdutoById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto a ser buscado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponse'
+        '404':
+          description: Produto não encontrado
+
+    put:
+      summary: Atualiza um produto pelo ID
+      operationId: updateProduto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto a ser atualizado
+          schema:
+            type: string
       requestBody:
-        description: Dados do novo produto
+        description: Dados do produto a ser atualizado
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Produto'
+              $ref: '#/components/schemas/ProdutoRequest'
       responses:
-        '201':
-          description: Produto criado com sucesso
+        '200':
+          description: Produto atualizado com sucesso
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Produto'
-      security:
-        - apiKey: []
+                $ref: '#/components/schemas/ProdutoResponse'
+        '400':
+          description: Requisição inválida
+        '404':
+          description: Produto não encontrado
 
-  # /categorias:
-  #   get:
-  #     summary: Lista todas as categorias
-  #     operationId: listCategorias
-  #     responses:
-  #       '200':
-  #         description: Lista de categorias
-  #         content:
-  #           application/json:
-  #             schema:
-  #               type: array
-  #               items:
-  #                 $ref: '#/components/schemas/Categoria'
-  #     security:
-  #       - apiKey: []
-  #   post:
-  #     summary: Cria uma nova categoria
-  #     operationId: createCategoria
-  #     requestBody:
-  #       description: Dados da nova categoria
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/Categoria'
-  #     responses:
-  #       '201':
-  #         description: Categoria criada com sucesso
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/Categoria'
-  #     security:
-  #       - apiKey: []
+    delete:
+      summary: Deleta um produto pelo ID
+      operationId: deleteProduto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto a ser deletado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produto deletado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Produto não encontrado
+
+  /produtos/categoria/{id_category}:
+    get:
+      summary: Lista produtos por categoria
+      operationId: getProdutosByCategory
+      parameters:
+        - name: id_category
+          in: path
+          required: true
+          description: ID da categoria dos produtos a serem listados
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de produtos por categoria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProdutoResponse'
+
 
 components:
   securitySchemes:
@@ -325,87 +381,6 @@ components:
       name: X-API-KEY
 
   schemas:
-    Cliente:
-      type: object
-      properties:
-        cpf:
-          type: string
-          description: CPF do cliente
-        nome:
-          type: string
-          description: Nome do cliente
-        email:
-          type: string
-          description: E-mail do cliente
-      required:
-        - cpf
-        - nome
-        - email
-
-    Pedido:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID do pedido
-        data_hora_inicio:
-          type: string
-          format: date-time
-          description: Data e hora de início do pedido
-        cpf_cliente:
-          type: string
-          description: CPF do cliente
-        id_pagamento:
-          type: string
-          description: ID do pagamento
-        id_satisfacao:
-          type: string
-          description: ID da satisfação
-      required:
-        - id
-        - data_hora_inicio
-        - cpf_cliente
-        - id_pagamento
-
-    Produto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID do produto
-        nome:
-          type: string
-          description: Nome do produto
-        descricao:
-          type: string
-          description: Descrição do produto
-        preco:
-          type: number
-          format: float
-          description: Preço do produto
-        id_categoria:
-          type: string
-          description: ID da categoria
-      required:
-        - id
-        - nome
-        - descricao
-        - preco
-        - id_categoria
-
-    Categoria:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID da categoria
-        nome:
-          type: string
-          description: Nome da categoria
-      required:
-        - id
-        - nome
-
     ClienteRequest:
       type: object
       properties:
@@ -569,3 +544,59 @@ components:
         - produtoId
         - quantidade
         - precoUnitario
+    ProdutoRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome do produto
+          example: "Burger de Frango"
+        description:
+          type: string
+          description: Descrição do produto
+          example: "Um delicioso burger de frango com alface, tomate e maionese."
+        price:
+          type: string
+          description: Preço do produto
+          example: "25.50"
+        id_category:
+          type: string
+          description: ID da categoria do produto
+          example: "123"
+        url_img:
+          type: string
+          description: URL da imagem do produto
+          example: "http://example.com/img/burger-de-frango.jpg"
+      required:
+        - name
+        - price
+        - id_category
+        - url_img
+
+    ProdutoResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID do produto
+          example: "1"
+        name:
+          type: string
+          description: Nome do produto
+          example: "Burger de Frango"
+        description:
+          type: string
+          description: Descrição do produto
+          example: "Um delicioso burger de frango com alface, tomate e maionese."
+        price:
+          type: string
+          description: Preço do produto
+          example: "25.50"
+        id_category:
+          type: string
+          description: ID da categoria do produto
+          example: "123"
+        url_img:
+          type: string
+          description: URL da imagem do produto
+          example: "http://example.com/img/burger-de-frango.jpg"
