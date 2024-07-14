@@ -23,14 +23,14 @@ resource "aws_lb" "clients_fiap_burger_lb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["subnet-02332486181d5f757", "subnet-065b86e8bc1297d97", "subnet-060b3fa08edb4c3f7"]
+  subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
 }
 
 resource "aws_lb_target_group" "clients_fiap_burger_tg" {
   name     = "clients-fiap-burger-tg"
   port     = 80
   protocol = "TCP"
-  vpc_id   = "vpc-008220555f42a21df"
+  vpc_id   = "${var.vpc_id}"
 }
 
 resource "aws_lb_listener" "clients_fiap_burger_listener" {
@@ -49,14 +49,14 @@ resource "aws_lb" "pedidos_fiap_burger_lb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["subnet-02332486181d5f757", "subnet-065b86e8bc1297d97", "subnet-060b3fa08edb4c3f7"]
+  subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
 }
 
 resource "aws_lb_target_group" "pedidos_fiap_burger_tg" {
   name     = "pedidos-fiap-burger-tg"
   port     = 80
   protocol = "TCP"
-  vpc_id   = "vpc-008220555f42a21df"
+  vpc_id   = "${var.vpc_id}"
 }
 
 resource "aws_lb_listener" "pedidos_fiap_burger_listener" {
@@ -75,14 +75,14 @@ resource "aws_lb" "produtos_fiap_burger_lb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["subnet-02332486181d5f757", "subnet-065b86e8bc1297d97", "subnet-060b3fa08edb4c3f7"]
+  subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
 }
 
 resource "aws_lb_target_group" "produtos_fiap_burger_tg" {
   name     = "produtos-fiap-burger-tg"
   port     = 80
   protocol = "TCP"
-  vpc_id   = "vpc-008220555f42a21df"
+  vpc_id   = "${var.vpc_id}"
 }
 
 resource "aws_lb_listener" "produtos_fiap_burger_listener" {

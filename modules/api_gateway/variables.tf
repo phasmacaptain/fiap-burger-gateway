@@ -3,10 +3,6 @@ variable "target_group_port" {
   type        = number
 }
 
-variable "dns_name" {
-  description = "The DNS name of the load balancer"
-  type        = string
-}
 
 variable "api_gateway_role" {
   description = "The ARN of the IAM role for API Gateway"
@@ -25,6 +21,31 @@ variable "auth_authorizer_invoke_arn" {
 
 variable "lambda_auth_authorizer" {
   description = "The ARN of the Lambda function for authorization"
+  type        = string
+}
+
+variable "account_id" {
+  description = "Account ID"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
+
+variable "subnet_a" {
+  description = "Subnet S"
+  type        = string
+}
+
+variable "subnet_b" {
+  description = "Subnet S"
+  type        = string
+}
+
+variable "subnet_c" {
+  description = "Subnet C"
   type        = string
 }
 
