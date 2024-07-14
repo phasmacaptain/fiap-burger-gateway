@@ -1,14 +1,3 @@
-resource "aws_api_gateway_integration" "clientes_integration_get" {
-  rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
-  resource_id             = data.aws_api_gateway_resource.cliente.id
-  http_method             = "GET"
-  integration_http_method = "GET"
-  type                    = "HTTP_PROXY"
-  uri                     = "http://${aws_lb.clients_fiap_burger_lb.dns_name}"
-  connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.clients_vpc_link.id
-}
-
 resource "aws_api_gateway_integration" "clientes_integration_post" {
   rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
   resource_id             = data.aws_api_gateway_resource.cliente.id
