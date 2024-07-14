@@ -88,10 +88,50 @@ paths:
         '404':
           description: Cliente não encontrado
 
-  /pedidos:
+  /pedido:
+    post:
+      summary: Cria um novo pedido
+      operationId: criarPedido
+      requestBody:
+        description: Dados do novo pedido
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriarPedidoRequest'
+      responses:
+        '200':
+          description: Pedido criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoResponse'
+        '400':
+          description: Requisição inválida
+
+    delete:
+      summary: Deleta um pedido
+      operationId: deletarPedido
+      requestBody:
+        description: Dados do pedido a ser deletado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeletarPedidoRequest'
+      responses:
+        '200':
+          description: Pedido deletado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+
     get:
       summary: Lista todos os pedidos
-      operationId: listPedidos
+      operationId: listaPedidos
       responses:
         '200':
           description: Lista de pedidos
@@ -100,28 +140,112 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Pedido'
-      security:
-        - apiKey: []
+                  $ref: '#/components/schemas/PedidoResponse'
+
+  /pedido/{id}:
+    get:
+      summary: Busca um pedido pelo ID
+      operationId: buscarPedido
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do pedido a ser buscado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pedido encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoResponse'
+        '404':
+          description: Pedido não encontrado
+
+  /pedido/avaliar:
     post:
-      summary: Cria um novo pedido
-      operationId: createPedido
+      summary: Avalia um pedido
+      operationId: avaliarPedido
       requestBody:
-        description: Dados do novo pedido
+        description: Dados da avaliação do pedido
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pedido'
+              $ref: '#/components/schemas/AvaliarPedidoRequest'
       responses:
-        '201':
-          description: Pedido criado com sucesso
+        '200':
+          description: Pedido avaliado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+
+  /pedido/listar/{id_status}:
+    get:
+      summary: Lista pedidos por status
+      operationId: listaPedidosPorStatus
+      parameters:
+        - name: id_status
+          in: path
+          required: true
+          description: ID do status dos pedidos a serem listados
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de pedidos por status
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pedido'
-      security:
-        - apiKey: []
+                type: array
+                items:
+                  $ref: '#/components/schemas/PedidoResponse'
+
+  /pedido/atualizar-status:
+    patch:
+      summary: Atualiza o status de um pedido
+      operationId: atualizarStatusPedido
+      requestBody:
+        description: Dados para atualizar o status do pedido
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarStatusPedidoRequest'
+      responses:
+        '200':
+          description: Status do pedido atualizado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+
+  /pedido/efetuar-pagamento:
+    post:
+      summary: Efetua o pagamento de um pedido
+      operationId: efetuarPagamento
+      requestBody:
+        description: Dados do pagamento
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EfetuarPagamentoRequest'
+      responses:
+        '200':
+          description: Pagamento efetuado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EfetuarPagamentoResponse'
+        '400':
+          description: Requisição inválida
 
   /produtos:
     get:
@@ -317,3 +441,131 @@ components:
           type: string
           description: Nome do cliente
           example: "João Silva"
+    CriarPedidoRequest:
+      type: object
+      properties:
+        cpf:
+          type: string
+          description: CPF do cliente
+          example: "12345678900"
+        itensPedido:
+          type: array
+          description: Lista de itens do pedido
+          items:
+            $ref: '#/components/schemas/ItensPedido'
+      required:
+        - cpf
+
+    DeletarPedidoRequest:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "54321"
+      required:
+        - idPedido
+
+    AvaliarPedidoRequest:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        idSatisfacao:
+          type: string
+          description: ID da satisfação
+          example: "98765"
+      required:
+        - idPedido
+        - idSatisfacao
+
+    AtualizarStatusPedidoRequest:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        idStatus:
+          type: string
+          description: Novo status do pedido
+          example: "Entregue"
+      required:
+        - idPedido
+        - idStatus
+
+    EfetuarPagamentoRequest:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        idPagamento:
+          type: string
+          description: ID do pagamento
+          example: "12345"
+        valorTotal:
+          type: string
+          description: Valor total do pagamento
+          example: "150.50"
+      required:
+        - idPedido
+        - idPagamento
+        - valorTotal
+
+    PedidoResponse:
+      type: object
+      properties:
+        pedidoId:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        cpf:
+          type: string
+          description: CPF do cliente
+          example: "12345678900"
+        itensPedido:
+          type: array
+          description: Lista de itens do pedido
+          items:
+            $ref: '#/components/schemas/ItensPedido'
+        status:
+          type: string
+          description: Status do pedido
+          example: "Entregue"
+
+    EfetuarPagamentoResponse:
+      type: object
+      properties:
+        pedidoId:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        statusPagamento:
+          type: string
+          description: Status do pagamento
+          example: "Pago"
+
+    ItensPedido:
+      type: object
+      properties:
+        produtoId:
+          type: string
+          description: ID do produto
+          example: "98765"
+        quantidade:
+          type: integer
+          description: Quantidade do produto
+          example: 2
+        precoUnitario:
+          type: number
+          format: float
+          description: Preço unitário do produto
+          example: 15.50
+      required:
+        - produtoId
+        - quantidade
+        - precoUnitario
