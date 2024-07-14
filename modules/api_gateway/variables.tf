@@ -24,6 +24,11 @@ variable "lambda_auth_authorizer" {
   type        = string
 }
 
+variable "dns_name" {
+  description = "The DNS name of the load balancer"
+  type        = string
+}
+
 variable "account_id" {
   description = "Account ID"
   type        = string
