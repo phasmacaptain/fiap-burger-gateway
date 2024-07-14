@@ -8,40 +8,85 @@ servers:
     description: Servidor de produção
 
 paths:
-  /clientes:
-    get:
-      summary: Lista todos os clientes
-      operationId: listClientes
-      responses:
-        '200':
-          description: Lista de clientes
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Cliente'
-      security:
-        - apiKey: []
+  /cliente:
     post:
       summary: Cria um novo cliente
-      operationId: createCliente
+      operationId: salvarCliente
       requestBody:
         description: Dados do novo cliente
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Cliente'
+              $ref: '#/components/schemas/ClienteRequest'
       responses:
         '201':
           description: Cliente criado com sucesso
+          headers:
+            Location:
+              description: URL do novo cliente criado
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+
+    patch:
+      summary: Edita um cliente existente
+      operationId: editarCliente
+      requestBody:
+        description: Dados do cliente a ser editado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteRequest'
+      responses:
+        '200':
+          description: Cliente atualizado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+        '404':
+          description: Cliente não encontrado
+  /cliente/{cpf}:
+    get:
+      summary: Busca um cliente pelo CPF
+      operationId: buscarCliente
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          description: CPF do cliente a ser buscado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente encontrado
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Cliente'
-      security:
-        - apiKey: []
+                $ref: '#/components/schemas/ClienteResponse'
+        '404':
+          description: Cliente não encontrado
+
+    delete:
+      summary: Deleta um cliente pelo CPF
+      operationId: deletarCliente
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          description: CPF do cliente a ser deletado
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Cliente deletado com sucesso
+        '404':
+          description: Cliente não encontrado
 
   /pedidos:
     get:
@@ -236,3 +281,39 @@ components:
       required:
         - id
         - nome
+
+    ClienteRequest:
+      type: object
+      properties:
+        cpf:
+          type: string
+          description: CPF do cliente
+          example: "12345678900"
+        email:
+          type: string
+          description: Email do cliente
+          example: "cliente@fiap.com"
+        nome:
+          type: string
+          description: Nome do cliente
+          example: "João Silva"
+      required:
+        - cpf
+        - email
+        - nome
+
+    ClienteResponse:
+      type: object
+      properties:
+        cpf:
+          type: string
+          description: CPF do cliente
+          example: "12345678900"
+        email:
+          type: string
+          description: Email do cliente
+          example: "cliente@fiap.com"
+        nome:
+          type: string
+          description: Nome do cliente
+          example: "João Silva"
