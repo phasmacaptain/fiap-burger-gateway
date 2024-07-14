@@ -1,8 +1,3 @@
-data "aws_api_gateway_resource" "cliente" {
-  rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
-  path   = "/cliente"
-}
-
 data "aws_api_gateway_resource" "cliente_by_cpf" {
   rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
   path   = "/cliente/{cpf}"

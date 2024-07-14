@@ -8,7 +8,7 @@ servers:
     description: Servidor de produção
 
 paths:
-  /cliente:
+  /cliente/{cpf}:
     post:
       summary: Cria um novo cliente
       operationId: salvarCliente
@@ -29,7 +29,6 @@ paths:
                 type: string
         '400':
           description: Requisição inválida
-
     patch:
       summary: Edita um cliente existente
       operationId: editarCliente
@@ -51,7 +50,6 @@ paths:
           description: Requisição inválida
         '404':
           description: Cliente não encontrado
-  /cliente/{cpf}:
     get:
       summary: Busca um cliente pelo CPF
       operationId: buscarCliente

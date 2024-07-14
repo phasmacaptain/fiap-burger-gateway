@@ -1,6 +1,6 @@
 resource "aws_api_gateway_integration" "clientes_integration_post" {
   rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
-  resource_id             = data.aws_api_gateway_resource.cliente.id
+  resource_id             = data.aws_api_gateway_resource.cliente_by_cpf.id
   http_method             = "POST"
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
@@ -11,7 +11,7 @@ resource "aws_api_gateway_integration" "clientes_integration_post" {
 
 resource "aws_api_gateway_integration" "clientes_integration_patch" {
   rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
-  resource_id             = data.aws_api_gateway_resource.cliente.id
+  resource_id             = data.aws_api_gateway_resource.cliente_by_cpf.id
   http_method             = "PATCH"
   integration_http_method = "PATCH"
   type                    = "HTTP_PROXY"
