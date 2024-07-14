@@ -1,6 +1,6 @@
 resource "aws_api_gateway_deployment" "fiap_burger_deployment" {
   depends_on = [
-    aws_api_gateway_integration.clientes_integration,
+    aws_api_gateway_integration.clientes_integration_get,
     aws_api_gateway_integration.clientes_integration_post,
     aws_api_gateway_integration.clientes_integration_patch,
     aws_api_gateway_integration.clientes_integration_get_by_cpf,
