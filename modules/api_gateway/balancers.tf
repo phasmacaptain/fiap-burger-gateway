@@ -1,7 +1,7 @@
 resource "aws_security_group" "lb_sg" {
   name        = "fiap-burger-lb-sg-gtw"
   description = "Allow HTTP traffic"
-  vpc_id      = "vpc-061b6881e5e910a9a"
+  vpc_id      = "vpc-008220555f42a21df"
 
   ingress {
     from_port   = 80
@@ -30,7 +30,7 @@ resource "aws_lb_target_group" "clients_fiap_burger_tg" {
   name     = "clients-fiap-burger-tg"
   port     = 80
   protocol = "TCP"
-  vpc_id   = "vpc-061b6881e5e910a9a"
+  vpc_id   = "vpc-008220555f42a21df"
 }
 
 resource "aws_lb_listener" "clients_fiap_burger_listener" {
@@ -56,7 +56,7 @@ resource "aws_lb_target_group" "pedidos_fiap_burger_tg" {
   name     = "pedidos-fiap-burger-tg"
   port     = 80
   protocol = "TCP"
-  vpc_id   = "vpc-061b6881e5e910a9a"
+  vpc_id   = "vpc-008220555f42a21df"
 }
 
 resource "aws_lb_listener" "pedidos_fiap_burger_listener" {
@@ -82,7 +82,7 @@ resource "aws_lb_target_group" "produtos_fiap_burger_tg" {
   name     = "produtos-fiap-burger-tg"
   port     = 80
   protocol = "TCP"
-  vpc_id   = "vpc-061b6881e5e910a9a"
+  vpc_id   = "vpc-008220555f42a21df"
 }
 
 resource "aws_lb_listener" "produtos_fiap_burger_listener" {
@@ -108,7 +108,7 @@ resource "aws_lb_target_group" "checkout_fiap_burger_tg" {
   name     = "checkout-fiap-burger-tg"
   port     = 80
   protocol = "TCP"
-  vpc_id   = "vpc-061b6881e5e910a9a"
+  vpc_id   = "vpc-008220555f42a21df"
 }
 
 resource "aws_lb_listener" "checkout_fiap_burger_listener" {
@@ -134,7 +134,7 @@ resource "aws_lb_target_group" "categorias_fiap_burger_tg" {
   name     = "categorias-fiap-burger-tg"
   port     = 80
   protocol = "TCP"
-  vpc_id   = "vpc-061b6881e5e910a9a"
+  vpc_id   = "vpc-008220555f42a21df"
 }
 
 resource "aws_lb_listener" "categorias_fiap_burger_listener" {
