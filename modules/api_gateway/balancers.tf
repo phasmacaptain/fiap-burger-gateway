@@ -23,7 +23,7 @@ resource "aws_lb" "clients_fiap_burger_lb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
+  subnets            = ["subnet-02332486181d5f757", "subnet-065b86e8bc1297d97", "subnet-060b3fa08edb4c3f7"]
 }
 
 resource "aws_lb_target_group" "clients_fiap_burger_tg" {
@@ -49,7 +49,7 @@ resource "aws_lb" "pedidos_fiap_burger_lb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
+  subnets            = ["subnet-02332486181d5f757", "subnet-065b86e8bc1297d97", "subnet-060b3fa08edb4c3f7"]
 }
 
 resource "aws_lb_target_group" "pedidos_fiap_burger_tg" {
@@ -75,7 +75,7 @@ resource "aws_lb" "produtos_fiap_burger_lb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
+  subnets            = ["subnet-02332486181d5f757", "subnet-065b86e8bc1297d97", "subnet-060b3fa08edb4c3f7"]
 }
 
 resource "aws_lb_target_group" "produtos_fiap_burger_tg" {
@@ -101,7 +101,7 @@ resource "aws_lb" "checkout_fiap_burger_lb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
+  subnets            = ["subnet-02332486181d5f757", "subnet-065b86e8bc1297d97", "subnet-060b3fa08edb4c3f7"]
 }
 
 resource "aws_lb_target_group" "checkout_fiap_burger_tg" {
@@ -127,7 +127,7 @@ resource "aws_lb" "categorias_fiap_burger_lb" {
   internal           = false
   load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["subnet-07559b6ca5d4e7ab4", "subnet-060aa625708d1da40", "subnet-003119a8b68a3fe05"]
+  subnets            = ["subnet-02332486181d5f757", "subnet-065b86e8bc1297d97", "subnet-060b3fa08edb4c3f7"]
 }
 
 resource "aws_lb_target_group" "categorias_fiap_burger_tg" {
