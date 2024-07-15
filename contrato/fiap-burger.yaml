@@ -710,7 +710,7 @@ components:
           description: URL da imagem do produto
           example: "http://example.com/img/burger-de-frango.jpg"
      
-     PagamentoResponse:
+    PagamentoResponse:
       type: object
       properties:
         id:
