@@ -1,0 +1,750 @@
+openapi: 3.0.0
+info:
+  title: FiapBurger API Gateway
+  description: API Gateway para o FiapBurger
+  version: 1.0.0
+servers:
+  - url: /
+    description: Servidor de produção
+
+paths:
+  /cliente/{cpf}:
+    post:
+      summary: Cria um novo cliente
+      operationId: salvarCliente
+      requestBody:
+        description: Dados do novo cliente
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteRequest'
+      responses:
+        '201':
+          description: Cliente criado com sucesso
+          headers:
+            Location:
+              description: URL do novo cliente criado
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+      security:
+        - lambda_authorizer: []
+    patch:
+      summary: Edita um cliente existente
+      operationId: editarCliente
+      requestBody:
+        description: Dados do cliente a ser editado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteRequest'
+      responses:
+        '200':
+          description: Cliente atualizado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+        '404':
+          description: Cliente não encontrado
+      security:
+        - lambda_authorizer: []
+    get:
+      summary: Busca um cliente pelo CPF
+      operationId: buscarCliente
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          description: CPF do cliente a ser buscado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteResponse'
+        '404':
+          description: Cliente não encontrado
+      security:
+        - lambda_authorizer: []
+    delete:
+      summary: Deleta um cliente pelo CPF
+      operationId: deletarCliente
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          description: CPF do cliente a ser deletado
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Cliente deletado com sucesso
+        '404':
+          description: Cliente não encontrado
+      security:
+        - lambda_authorizer: []
+
+  /pedido:
+    post:
+      summary: Cria um novo pedido
+      operationId: criarPedido
+      requestBody:
+        description: Dados do novo pedido
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriarPedidoRequest'
+      responses:
+        '200':
+          description: Pedido criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoResponse'
+        '400':
+          description: Requisição inválida
+      security:
+        - lambda_authorizer: []
+    delete:
+      summary: Deleta um pedido
+      operationId: deletarPedido
+      requestBody:
+        description: Dados do pedido a ser deletado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeletarPedidoRequest'
+      responses:
+        '200':
+          description: Pedido deletado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+      security:
+        - lambda_authorizer: []
+    get:
+      summary: Lista todos os pedidos
+      operationId: listaPedidos
+      responses:
+        '200':
+          description: Lista de pedidos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PedidoResponse'
+      security:
+        - lambda_authorizer: []
+
+  /pedido/{id}:
+    get:
+      summary: Busca um pedido pelo ID
+      operationId: buscarPedido
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do pedido a ser buscado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pedido encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoResponse'
+        '404':
+          description: Pedido não encontrado
+      security:
+        - lambda_authorizer: []
+
+  /pedido/avaliar:
+    post:
+      summary: Avalia um pedido
+      operationId: avaliarPedido
+      requestBody:
+        description: Dados da avaliação do pedido
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvaliarPedidoRequest'
+      responses:
+        '200':
+          description: Pedido avaliado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+      security:
+        - lambda_authorizer: []
+
+  /pedido/listar/{id_status}:
+    get:
+      summary: Lista pedidos por status
+      operationId: listaPedidosPorStatus
+      parameters:
+        - name: id_status
+          in: path
+          required: true
+          description: ID do status dos pedidos a serem listados
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de pedidos por status
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PedidoResponse'
+      security:
+        - lambda_authorizer: []
+
+  /pedido/atualizar-status:
+    patch:
+      summary: Atualiza o status de um pedido
+      operationId: atualizarStatusPedido
+      requestBody:
+        description: Dados para atualizar o status do pedido
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarStatusPedidoRequest'
+      responses:
+        '200':
+          description: Status do pedido atualizado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Requisição inválida
+      security:
+        - lambda_authorizer: []
+
+  /pedido/efetuar-pagamento:
+    post:
+      summary: Efetua o pagamento de um pedido
+      operationId: efetuarPagamento
+      requestBody:
+        description: Dados do pagamento
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EfetuarPagamentoRequest'
+      responses:
+        '200':
+          description: Pagamento efetuado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EfetuarPagamentoResponse'
+        '400':
+          description: Requisição inválida
+      security:
+        - lambda_authorizer: []
+
+  /produtos:
+    post:
+      summary: Adiciona um novo produto
+      operationId: addProduto
+      requestBody:
+        description: Dados do novo produto
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdutoRequest'
+      responses:
+        '200':
+          description: Produto adicionado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponse'
+        '400':
+          description: Requisição inválida
+      security:
+        - lambda_authorizer: []
+    get:
+      summary: Lista todos os produtos
+      operationId: getAllProdutos
+      responses:
+        '200':
+          description: Lista de produtos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProdutoResponse'
+      security:
+        - lambda_authorizer: []
+
+  /produtos/{id}:
+    get:
+      summary: Busca um produto pelo ID
+      operationId: getProdutoById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto a ser buscado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponse'
+        '404':
+          description: Produto não encontrado
+      security:
+        - lambda_authorizer: []
+    put:
+      summary: Atualiza um produto pelo ID
+      operationId: updateProduto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto a ser atualizado
+          schema:
+            type: string
+      requestBody:
+        description: Dados do produto a ser atualizado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdutoRequest'
+      responses:
+        '200':
+          description: Produto atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponse'
+        '400':
+          description: Requisição inválida
+        '404':
+          description: Produto não encontrado
+      security:
+        - lambda_authorizer: []
+    delete:
+      summary: Deleta um produto pelo ID
+      operationId: deleteProduto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do produto a ser deletado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produto deletado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Produto não encontrado
+      security:
+        - lambda_authorizer: []
+
+  /produtos/categoria/{id_category}:
+    get:
+      summary: Lista produtos por categoria
+      operationId: getProdutosByCategory
+      parameters:
+        - name: id_category
+          in: path
+          required: true
+          description: ID da categoria dos produtos a serem listados
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de produtos por categoria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProdutoResponse'
+      security:
+        - lambda_authorizer: []
+
+  /pagamento:
+    get:
+      summary: Lista todos os meios de pagamentos
+      operationId: listarMeiosPagamentos
+      responses:
+        '200':
+          description: Lista de meios de pagamentos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PagamentoResponse'
+      security:
+        - lambda_authorizer: []
+    post:
+      summary: Efetua um pagamento
+      operationId: efetuarPagamento
+      requestBody:
+        description: Dados para efetuar o pagamento
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EfetuarPagamentoRequest'
+      responses:
+        '200':
+          description: Pagamento efetuado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EfetuarPagamentoResponse'
+      security:
+        - lambda_authorizer: []
+
+  /pagamento/{id}:
+    get:
+      summary: Webhook de pagamento
+      operationId: webhookPagamento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do pedido
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalhes do webhook do pagamento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookPagamentoResponse'
+      security:
+        - lambda_authorizer: []
+
+  /pagamento/consultar/{id}:
+    get:
+      summary: Consulta status de pagamento
+      operationId: consultarStatusPagamento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do pedido
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Status do pagamento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsultarStatusPagamentoResponse'
+      security:
+        - lambda_authorizer: []
+
+components:
+  securitySchemes:
+    lambda_authorizer:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: "custom"
+      x-amazon-apigateway-authorizer:
+        type: "token"
+        authorizerUri: "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${lambda_auth_authorizer_arn}/invocations"
+        authorizerResultTtlInSeconds: 300
+
+  schemas:
+    ClienteRequest:
+      type: object
+      properties:
+        cpf:
+          type: string
+          description: CPF do cliente
+          example: "12345678900"
+        email:
+          type: string
+          description: Email do cliente
+          example: "cliente@fiap.com"
+        nome:
+          type: string
+          description: Nome do cliente
+          example: "João Silva"
+      required:
+        - cpf
+        - email
+        - nome
+
+    ClienteResponse:
+      type: object
+      properties:
+        cpf:
+          type: string
+          description: CPF do cliente
+          example: "12345678900"
+        email:
+          type: string
+          description: Email do cliente
+          example: "cliente@fiap.com"
+        nome:
+          type: string
+          description: Nome do cliente
+          example: "João Silva"
+    CriarPedidoRequest:
+      type: object
+      properties:
+        cpf:
+          type: string
+          description: CPF do cliente
+          example: "12345678900"
+        itensPedido:
+          type: array
+          description: Lista de itens do pedido
+          items:
+            $ref: '#/components/schemas/ItensPedido'
+      required:
+        - cpf
+
+    DeletarPedidoRequest:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "54321"
+      required:
+        - idPedido
+
+    AvaliarPedidoRequest:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        idSatisfacao:
+          type: string
+          description: ID da satisfação
+          example: "98765"
+      required:
+        - idPedido
+        - idSatisfacao
+
+    AtualizarStatusPedidoRequest:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        idStatus:
+          type: string
+          description: Novo status do pedido
+          example: "Entregue"
+      required:
+        - idPedido
+        - idStatus
+
+    EfetuarPagamentoRequest:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        idPagamento:
+          type: string
+          description: ID do pagamento
+          example: "12345"
+        valorTotal:
+          type: string
+          description: Valor total do pagamento
+          example: "150.50"
+      required:
+        - idPedido
+        - idPagamento
+        - valorTotal
+
+    PedidoResponse:
+      type: object
+      properties:
+        pedidoId:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        cpf:
+          type: string
+          description: CPF do cliente
+          example: "12345678900"
+        itensPedido:
+          type: array
+          description: Lista de itens do pedido
+          items:
+            $ref: '#/components/schemas/ItensPedido'
+        status:
+          type: string
+          description: Status do pedido
+          example: "Entregue"
+
+    EfetuarPagamentoResponse:
+      type: object
+      properties:
+        pedidoId:
+          type: string
+          description: ID do pedido
+          example: "54321"
+        statusPagamento:
+          type: string
+          description: Status do pagamento
+          example: "Pago"
+
+    ItensPedido:
+      type: object
+      properties:
+        produtoId:
+          type: string
+          description: ID do produto
+          example: "98765"
+        quantidade:
+          type: integer
+          description: Quantidade do produto
+          example: 2
+        precoUnitario:
+          type: number
+          format: float
+          description: Preço unitário do produto
+          example: 15.50
+      required:
+        - produtoId
+        - quantidade
+        - precoUnitario
+    ProdutoRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome do produto
+          example: "Burger de Frango"
+        description:
+          type: string
+          description: Descrição do produto
+          example: "Um delicioso burger de frango com alface, tomate e maionese."
+        price:
+          type: string
+          description: Preço do produto
+          example: "25.50"
+        id_category:
+          type: string
+          description: ID da categoria do produto
+          example: "123"
+        url_img:
+          type: string
+          description: URL da imagem do produto
+          example: "http://example.com/img/burger-de-frango.jpg"
+      required:
+        - name
+        - price
+        - id_category
+        - url_img
+
+    ProdutoResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID do produto
+          example: "1"
+        name:
+          type: string
+          description: Nome do produto
+          example: "Burger de Frango"
+        description:
+          type: string
+          description: Descrição do produto
+          example: "Um delicioso burger de frango com alface, tomate e maionese."
+        price:
+          type: string
+          description: Preço do produto
+          example: "25.50"
+        id_category:
+          type: string
+          description: ID da categoria do produto
+          example: "123"
+        url_img:
+          type: string
+          description: URL da imagem do produto
+          example: "http://example.com/img/burger-de-frango.jpg"
+     
+    PagamentoResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID do pagamento
+          example: "abc123"
+        meioPagamento:
+          type: string
+          description: Meio de pagamento
+          example: "Cartão de Crédito"
+        descricao:
+          type: string
+          description: Descrição do meio de pagamento
+          example: "Pagamento via cartão de crédito."
+    WebhookPagamentoResponse:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "12345"
+        status:
+          type: string
+          description: Status do webhook
+          example: "RECEIVED"
+
+    ConsultarStatusPagamentoResponse:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "12345"
+        status:
+          type: string
+          description: Status do pagamento
+          example: "COMPLETED"
