@@ -103,9 +103,9 @@ resource "aws_api_gateway_integration" "pedidos_integration_get_listar" {
   http_method             = "GET"
   integration_http_method = "GET"
   type                    = "HTTP_PROXY"
-  uri                     = "http://${aws_lb.produtos_fiap_burger_lb.dns_name}"
+  uri                     = "http://${aws_lb.pedidos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.produtos_vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.pedidos_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "pedidos_integration_post_atualizar_status" {
@@ -114,9 +114,9 @@ resource "aws_api_gateway_integration" "pedidos_integration_post_atualizar_statu
   http_method             = "PATCH"
   integration_http_method = "PATCH"
   type                    = "HTTP_PROXY"
-  uri                     = "http://${aws_lb.produtos_fiap_burger_lb.dns_name}"
+  uri                     = "http://${aws_lb.pedidos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.produtos_vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.pedidos_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "pedidos_integration_post_efetuar_pagamento" {
@@ -125,9 +125,9 @@ resource "aws_api_gateway_integration" "pedidos_integration_post_efetuar_pagamen
   http_method             = "POST"
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = "http://${aws_lb.produtos_fiap_burger_lb.dns_name}"
+  uri                     = "http://${aws_lb.pedidos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.produtos_vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.aws_api_gateway_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "produtos_integration_post" {
@@ -194,4 +194,48 @@ resource "aws_api_gateway_integration" "produtos_integration_get_categoria" {
   uri                     = "http://${aws_lb.produtos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.produtos_vpc_link.id
+}
+
+resource "aws_api_gateway_integration" "pagamentos_integration_get_meios" {
+  rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
+  resource_id             = data.aws_api_gateway_resource.integration_pagamento.id
+  http_method             = "GET"
+  integration_http_method = "GET"
+  type                    = "HTTP_PROXY"
+  uri                     = "http://${aws_lb.checkout_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.checkout_vpc_link.id
+}
+
+resource "aws_api_gateway_integration" "pagamentos_integration_post" {
+  rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
+  resource_id             = data.aws_api_gateway_resource.integration_pagamento.id
+  http_method             = "POST"
+  integration_http_method = "POST"
+  type                    = "HTTP_PROXY"
+  uri                     = "http://${aws_lb.checkout_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.checkout_vpc_link.id
+}
+
+resource "aws_api_gateway_integration" "pagamentos_integration_get_by_id" {
+  rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
+  resource_id             = data.aws_api_gateway_resource.integration_pagamento_get_by_id.id
+  http_method             = "GET"
+  integration_http_method = "GET"
+  type                    = "HTTP_PROXY"
+  uri                     = "http://${aws_lb.checkout_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.checkout_vpc_link.id
+}
+
+resource "aws_api_gateway_integration" "pagamentos_integration_status" {
+  rest_api_id             = aws_api_gateway_rest_api.fiap_burger_api.id
+  resource_id             = data.aws_api_gateway_resource.integration_pagamento_get_status.id
+  http_method             = "GET"
+  integration_http_method = "GET"
+  type                    = "HTTP_PROXY"
+  uri                     = "http://${aws_lb.checkout_fiap_burger_lb.dns_name}"
+  connection_type         = "VPC_LINK"
+  connection_id           = aws_api_gateway_vpc_link.checkout_vpc_link.id
 }

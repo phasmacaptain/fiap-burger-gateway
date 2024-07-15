@@ -96,6 +96,32 @@ resource "aws_lb_listener" "produtos_fiap_burger_listener" {
   }
 }
 
+resource "aws_lb" "checkout_fiap_burger_lb" {
+  name               = "fiap-burger-lb-checkout"
+  internal           = false
+  load_balancer_type = "network"
+  security_groups    = [aws_security_group.lb_sg.id]
+  subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
+}
+
+resource "aws_lb_target_group" "checkout_fiap_burger_tg" {
+  name     = "checkout-fiap-burger-tg"
+  port     = 80
+  protocol = "TCP"
+  vpc_id   = "${var.vpc_id}"
+}
+
+resource "aws_lb_listener" "checkout_fiap_burger_listener" {
+  load_balancer_arn = aws_lb.checkout_fiap_burger_lb.arn
+  port              = "80"
+  protocol          = "TCP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.checkout_fiap_burger_tg.arn
+  }
+}
+
 resource "aws_api_gateway_vpc_link" "clients_vpc_link" {
   name        = "clients-fiap-burger-vpc-link"
   target_arns = [aws_lb.clients_fiap_burger_lb.arn]
@@ -109,4 +135,9 @@ resource "aws_api_gateway_vpc_link" "produtos_vpc_link" {
 resource "aws_api_gateway_vpc_link" "pedidos_vpc_link" {
   name        = "pedidos-fiap-burger-vpc-link"
   target_arns = [aws_lb.pedidos_fiap_burger_lb.arn]
+}
+
+resource "aws_api_gateway_vpc_link" "checkout_vpc_link" {
+  name        = "checkout-fiap-burger-vpc-link"
+  target_arns = [aws_lb.checkout_fiap_burger_lb.arn]
 }

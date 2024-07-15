@@ -8,7 +8,8 @@ resource "aws_api_gateway_rest_api" "fiap_burger_api" {
       target_group_port          = var.target_group_port,
       dns_name                   = var.dns_name,
       api_gateway_role           = "arn:aws:iam::${var.account_id}:role/LabRole",
-      lambda_auth_authorizer_arn = var.lambda_auth_authorizer
+      lambda_auth_authorizer_arn = var.lambda_auth_authorizer,
+      region                     = "us-east-1"
     }
   )
 

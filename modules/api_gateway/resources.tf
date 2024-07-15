@@ -47,6 +47,27 @@ data "aws_api_gateway_resource" "produtos_categoria" {
   rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
   path   = "/produtos/categoria/{id_category}"
 }
+
+data "aws_api_gateway_resource" "produtos_pagamento_get_meios" {
+  rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
+  path   = "/pagamento"
+}
+
+data "aws_api_gateway_resource" "produtos_pagamento_post" {
+  rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
+  path   = "/pagamento"
+}
+
+data "aws_api_gateway_resource" "produtos_pagamento_get_by_id" {
+  rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
+  path   = "/pagamento/{id}"
+}
+
+data "aws_api_gateway_resource" "produtos_pagamento_get_status" {
+  rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
+  path   = "/pagamento/consultar/{id}"
+}
+
 # resource "aws_api_gateway_resource" "checkout" {
 #   rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
 #   path   = "/checkout"

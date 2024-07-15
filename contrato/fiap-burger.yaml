@@ -29,6 +29,8 @@ paths:
                 type: string
         '400':
           description: Requisição inválida
+      security:
+        - lambda_authorizer: []
     patch:
       summary: Edita um cliente existente
       operationId: editarCliente
@@ -50,6 +52,8 @@ paths:
           description: Requisição inválida
         '404':
           description: Cliente não encontrado
+      security:
+        - lambda_authorizer: []
     get:
       summary: Busca um cliente pelo CPF
       operationId: buscarCliente
@@ -69,7 +73,8 @@ paths:
                 $ref: '#/components/schemas/ClienteResponse'
         '404':
           description: Cliente não encontrado
-
+      security:
+        - lambda_authorizer: []
     delete:
       summary: Deleta um cliente pelo CPF
       operationId: deletarCliente
@@ -85,6 +90,8 @@ paths:
           description: Cliente deletado com sucesso
         '404':
           description: Cliente não encontrado
+      security:
+        - lambda_authorizer: []
 
   /pedido:
     post:
@@ -106,7 +113,8 @@ paths:
                 $ref: '#/components/schemas/PedidoResponse'
         '400':
           description: Requisição inválida
-
+      security:
+        - lambda_authorizer: []
     delete:
       summary: Deleta um pedido
       operationId: deletarPedido
@@ -126,7 +134,8 @@ paths:
                 type: string
         '400':
           description: Requisição inválida
-
+      security:
+        - lambda_authorizer: []
     get:
       summary: Lista todos os pedidos
       operationId: listaPedidos
@@ -139,6 +148,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PedidoResponse'
+      security:
+        - lambda_authorizer: []
 
   /pedido/{id}:
     get:
@@ -160,6 +171,8 @@ paths:
                 $ref: '#/components/schemas/PedidoResponse'
         '404':
           description: Pedido não encontrado
+      security:
+        - lambda_authorizer: []
 
   /pedido/avaliar:
     post:
@@ -181,6 +194,8 @@ paths:
                 type: string
         '400':
           description: Requisição inválida
+      security:
+        - lambda_authorizer: []
 
   /pedido/listar/{id_status}:
     get:
@@ -202,6 +217,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PedidoResponse'
+      security:
+        - lambda_authorizer: []
 
   /pedido/atualizar-status:
     patch:
@@ -223,6 +240,8 @@ paths:
                 type: string
         '400':
           description: Requisição inválida
+      security:
+        - lambda_authorizer: []
 
   /pedido/efetuar-pagamento:
     post:
@@ -244,6 +263,8 @@ paths:
                 $ref: '#/components/schemas/EfetuarPagamentoResponse'
         '400':
           description: Requisição inválida
+      security:
+        - lambda_authorizer: []
 
   /produtos:
     post:
@@ -265,7 +286,8 @@ paths:
                 $ref: '#/components/schemas/ProdutoResponse'
         '400':
           description: Requisição inválida
-
+      security:
+        - lambda_authorizer: []
     get:
       summary: Lista todos os produtos
       operationId: getAllProdutos
@@ -278,6 +300,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ProdutoResponse'
+      security:
+        - lambda_authorizer: []
 
   /produtos/{id}:
     get:
@@ -299,7 +323,8 @@ paths:
                 $ref: '#/components/schemas/ProdutoResponse'
         '404':
           description: Produto não encontrado
-
+      security:
+        - lambda_authorizer: []
     put:
       summary: Atualiza um produto pelo ID
       operationId: updateProduto
@@ -328,7 +353,8 @@ paths:
           description: Requisição inválida
         '404':
           description: Produto não encontrado
-
+      security:
+        - lambda_authorizer: []
     delete:
       summary: Deleta um produto pelo ID
       operationId: deleteProduto
@@ -348,6 +374,8 @@ paths:
                 type: string
         '404':
           description: Produto não encontrado
+      security:
+        - lambda_authorizer: []
 
   /produtos/categoria/{id_category}:
     get:
@@ -369,14 +397,97 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ProdutoResponse'
+      security:
+        - lambda_authorizer: []
 
+  /pagamento:
+    get:
+      summary: Lista todos os meios de pagamentos
+      operationId: listarMeiosPagamentos
+      responses:
+        '200':
+          description: Lista de meios de pagamentos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PagamentoResponse'
+      security:
+        - lambda_authorizer: []
+    post:
+      summary: Efetua um pagamento
+      operationId: efetuarPagamento
+      requestBody:
+        description: Dados para efetuar o pagamento
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EfetuarPagamentoRequest'
+      responses:
+        '200':
+          description: Pagamento efetuado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EfetuarPagamentoResponse'
+      security:
+        - lambda_authorizer: []
+
+  /pagamento/{id}:
+    get:
+      summary: Webhook de pagamento
+      operationId: webhookPagamento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do pedido
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalhes do webhook do pagamento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookPagamentoResponse'
+      security:
+        - lambda_authorizer: []
+
+  /pagamento/consultar/{id}:
+    get:
+      summary: Consulta status de pagamento
+      operationId: consultarStatusPagamento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do pedido
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Status do pagamento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsultarStatusPagamentoResponse'
+      security:
+        - lambda_authorizer: []
 
 components:
   securitySchemes:
-    apiKey:
+    lambda_authorizer:
       type: apiKey
+      name: Authorization
       in: header
-      name: X-API-KEY
+      x-amazon-apigateway-authtype: "custom"
+      x-amazon-apigateway-authorizer:
+        type: "token"
+        authorizerUri: "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${lambda_auth_authorizer_arn}/invocations"
+        authorizerResultTtlInSeconds: 300
 
   schemas:
     ClienteRequest:

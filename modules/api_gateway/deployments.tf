@@ -17,7 +17,11 @@ resource "aws_api_gateway_deployment" "fiap_burger_deployment" {
     aws_api_gateway_integration.produtos_integration_get_by_id,
     aws_api_gateway_integration.produtos_integration_put_by_id,
     aws_api_gateway_integration.produtos_integration_delete_by_id,
-    aws_api_gateway_integration.produtos_integration_get_categoria
+    aws_api_gateway_integration.produtos_integration_get_categoria,
+    aws_api_gateway_integration.pagamentos_integration_get_meios,
+    aws_api_gateway_integration.pagamentos_integration_post,
+    aws_api_gateway_integration.pagamentos_integration_get_by_id,
+    aws_api_gateway_integration.pagamentos_integration_status
   ]
   rest_api_id = aws_api_gateway_rest_api.fiap_burger_api.id
   stage_name  = "prod"
