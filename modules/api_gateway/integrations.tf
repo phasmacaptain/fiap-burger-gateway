@@ -127,7 +127,7 @@ resource "aws_api_gateway_integration" "pedidos_integration_post_efetuar_pagamen
   type                    = "HTTP_PROXY"
   uri                     = "http://${aws_lb.pedidos_fiap_burger_lb.dns_name}"
   connection_type         = "VPC_LINK"
-  connection_id           = aws_api_gateway_vpc_link.aws_api_gateway_vpc_link.id
+  connection_id           = aws_api_gateway_vpc_link.pedidos_vpc_link.id
 }
 
 resource "aws_api_gateway_integration" "produtos_integration_post" {
