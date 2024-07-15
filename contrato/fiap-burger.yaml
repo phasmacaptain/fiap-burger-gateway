@@ -725,3 +725,26 @@ components:
           type: string
           description: Descrição do meio de pagamento
           example: "Pagamento via cartão de crédito."
+    WebhookPagamentoResponse:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "12345"
+        status:
+          type: string
+          description: Status do webhook
+          example: "RECEIVED"
+
+    ConsultarStatusPagamentoResponse:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          description: ID do pedido
+          example: "12345"
+        status:
+          type: string
+          description: Status do pagamento
+          example: "COMPLETED"
