@@ -709,3 +709,19 @@ components:
           type: string
           description: URL da imagem do produto
           example: "http://example.com/img/burger-de-frango.jpg"
+     
+     PagamentoResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID do pagamento
+          example: "abc123"
+        meioPagamento:
+          type: string
+          description: Meio de pagamento
+          example: "Cartão de Crédito"
+        descricao:
+          type: string
+          description: Descrição do meio de pagamento
+          example: "Pagamento via cartão de crédito."
