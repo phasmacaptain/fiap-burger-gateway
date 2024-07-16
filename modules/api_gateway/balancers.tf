@@ -21,22 +21,22 @@ resource "aws_security_group" "lb_sg" {
 resource "aws_lb" "clients_fiap_burger_lb" {
   name               = "fiap-burger-lb-clients"
   internal           = false
-  load_balancer_type = "network"
+  load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
+  subnets            = [var.subnet_a, var.subnet_b, var.subnet_c]
 }
 
 resource "aws_lb_target_group" "clients_fiap_burger_tg" {
   name     = "clients-fiap-burger-tg"
   port     = 80
-  protocol = "TCP"
-  vpc_id   = "${var.vpc_id}"
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
 }
 
 resource "aws_lb_listener" "clients_fiap_burger_listener" {
   load_balancer_arn = aws_lb.clients_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "TCP"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
@@ -47,22 +47,22 @@ resource "aws_lb_listener" "clients_fiap_burger_listener" {
 resource "aws_lb" "pedidos_fiap_burger_lb" {
   name               = "fiap-burger-lb-pedidos"
   internal           = false
-  load_balancer_type = "network"
+  load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
+  subnets            = [var.subnet_a, var.subnet_b, var.subnet_c]
 }
 
 resource "aws_lb_target_group" "pedidos_fiap_burger_tg" {
   name     = "pedidos-fiap-burger-tg"
   port     = 80
-  protocol = "TCP"
-  vpc_id   = "${var.vpc_id}"
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
 }
 
 resource "aws_lb_listener" "pedidos_fiap_burger_listener" {
   load_balancer_arn = aws_lb.pedidos_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "TCP"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
@@ -73,22 +73,22 @@ resource "aws_lb_listener" "pedidos_fiap_burger_listener" {
 resource "aws_lb" "produtos_fiap_burger_lb" {
   name               = "fiap-burger-lb-produtos"
   internal           = false
-  load_balancer_type = "network"
+  load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
+  subnets            = [var.subnet_a, var.subnet_b, var.subnet_c]
 }
 
 resource "aws_lb_target_group" "produtos_fiap_burger_tg" {
   name     = "produtos-fiap-burger-tg"
   port     = 80
-  protocol = "TCP"
-  vpc_id   = "${var.vpc_id}"
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
 }
 
 resource "aws_lb_listener" "produtos_fiap_burger_listener" {
   load_balancer_arn = aws_lb.produtos_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "TCP"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
@@ -99,22 +99,22 @@ resource "aws_lb_listener" "produtos_fiap_burger_listener" {
 resource "aws_lb" "checkout_fiap_burger_lb" {
   name               = "fiap-burger-lb-checkout"
   internal           = false
-  load_balancer_type = "network"
+  load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
+  subnets            = [var.subnet_a, var.subnet_b, var.subnet_c]
 }
 
 resource "aws_lb_target_group" "checkout_fiap_burger_tg" {
   name     = "checkout-fiap-burger-tg"
   port     = 80
-  protocol = "TCP"
-  vpc_id   = "${var.vpc_id}"
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
 }
 
 resource "aws_lb_listener" "checkout_fiap_burger_listener" {
   load_balancer_arn = aws_lb.checkout_fiap_burger_lb.arn
   port              = "80"
-  protocol          = "TCP"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
