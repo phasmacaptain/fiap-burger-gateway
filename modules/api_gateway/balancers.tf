@@ -21,7 +21,7 @@ resource "aws_security_group" "lb_sg" {
 resource "aws_lb" "clients_fiap_burger_lb" {
   name               = "fiap-burger-lb-clients"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
 }
@@ -47,7 +47,7 @@ resource "aws_lb_listener" "clients_fiap_burger_listener" {
 resource "aws_lb" "pedidos_fiap_burger_lb" {
   name               = "fiap-burger-lb-pedidos"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
 }
@@ -73,7 +73,7 @@ resource "aws_lb_listener" "pedidos_fiap_burger_listener" {
 resource "aws_lb" "produtos_fiap_burger_lb" {
   name               = "fiap-burger-lb-produtos"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
 }
@@ -99,7 +99,7 @@ resource "aws_lb_listener" "produtos_fiap_burger_listener" {
 resource "aws_lb" "checkout_fiap_burger_lb" {
   name               = "fiap-burger-lb-checkout"
   internal           = false
-  load_balancer_type = "application"
+  load_balancer_type = "network"
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = ["${var.subnet_a}", "${var.subnet_b}", "${var.subnet_c}"]
 }
